@@ -1,25 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+const [tips, setTips] = useState("");
+
+
+
+useEffect(() => {
+fetchTips();
+}, [])
+
+const fetchTips = async () => {
+const response = await fetch(`http://bored.api.lewagon.com/api/activity/`);
+const data = await response.json();
+console.log(data.activity);
+setTips(data.activity)
 }
 
+
+
+return (
+
+<div className="App">
+
+<h2> {tips} </h2>
+<button onClick={fetchTips}>Clik to know what todo</button>
+
+
+
+</div>
+
+);
+
+}
 export default App;
